@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SecureSales.Api/SecureSales.Api.csproj" />
+    <Project Path="src/SecureSales.Application/SecureSales.Application.csproj" />
+    <Project Path="src/SecureSales.Domain/SecureSales.Domain.csproj" />
+    <Project Path="src/SecureSales.Infrastructure/SecureSales.Infrastructure.csproj" />
+  </Folder>
+</Solution>
