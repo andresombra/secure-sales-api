@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SecureSales.Application.DTOs;
 using SecureSales.Application.Interfaces;
+using System.Threading.Tasks;
 
 namespace SecureSales.Api.Controllers
 {
     [ApiController]
-    [Route("api/clientes")]
+    [Route("api/[controller]")]
     public class ClienteController : ControllerBase
     {
         private readonly IClienteService _service;
@@ -15,11 +16,17 @@ namespace SecureSales.Api.Controllers
             _service = service;
         }
 
-        [HttpPost]
-        public IActionResult Post(ClienteDto dto)
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
-            var id = _service.Criar(dto);
-            return Ok(new { Id = id });
+            var clientes = await _service.Listar();
+            return Ok(clientes);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(ClienteDto dto)
+        {
+            return Ok(new { Id = 2026 });
         }
     }
 }

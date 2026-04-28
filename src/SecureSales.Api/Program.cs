@@ -1,13 +1,33 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SecureSales.Application.Interfaces;
 using SecureSales.Application.Services;
+using SecureSales.Domain.Interfaces.Repositories;
+using SecureSales.Infrastructure.Data;
+using SecureSales.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
+// DB Context
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//  options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+//    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
+
+var connectionString = builder.Configuration["ConnectionStrings:Default"];
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        connectionString,
+        ServerVersion.AutoDetect(connectionString)
+    ));
+
+
 // DI
 builder.Services.AddScoped<IClienteService, ClienteService>();
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

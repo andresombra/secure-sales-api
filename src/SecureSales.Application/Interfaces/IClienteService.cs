@@ -1,4 +1,5 @@
 ﻿using SecureSales.Application.DTOs;
+using SecureSales.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace SecureSales.Application.Interfaces
 {
     public interface IClienteService
     {
-        Guid Criar(ClienteDto dto);
+        Task<IEnumerable<Cliente>> Listar();
     }
 }

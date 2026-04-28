@@ -1,6 +1,7 @@
 ﻿using SecureSales.Application.DTOs;
 using SecureSales.Application.Interfaces;
 using SecureSales.Domain;
+using SecureSales.Domain.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,15 @@ namespace SecureSales.Application.Services
 {
     public class ClienteService : IClienteService
     {
-        public Guid Criar(ClienteDto dto)
+        private readonly IClienteRepository _clienteRepository;
+        public ClienteService(IClienteRepository clienteRepository)
         {
-            var cliente = new Cliente
-            {
-                Nome = dto.Nome
-            };
+            _clienteRepository = clienteRepository;
+        }
 
-            return cliente.Id;
+        public async Task<IEnumerable<Cliente>> Listar()
+        {
+            return await _clienteRepository.ListarAsync();
         }
     }
 }
