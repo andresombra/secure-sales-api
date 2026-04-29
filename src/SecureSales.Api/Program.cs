@@ -15,6 +15,12 @@ builder.Services.AddControllers();
 //builder.Services.AddDbContext<AppDbContext>(options =>
 //  options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
 //    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
+//ou
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//    options.UseMySql(
+//        connectionString,
+//        ServerVersion.AutoDetect(connectionString)
+//    ));
 
 // DI
 builder.Services.AddScoped<IClienteService, ClienteService>();
@@ -29,12 +35,6 @@ builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
 
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
-
-//builder.Services.AddDbContext<AppDbContext>(options =>
-//    options.UseMySql(
-//        connectionString,
-//        ServerVersion.AutoDetect(connectionString)
-//    ));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

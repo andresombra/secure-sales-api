@@ -1,12 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Azure.Identity;
+﻿using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.Extensions.Configuration;
 using SecureSales.Application.Interfaces;
+using System;
+using System.Threading.Tasks;
 
 namespace SecureSales.Infrastructure.Security
 {
