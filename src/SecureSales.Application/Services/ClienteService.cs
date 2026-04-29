@@ -1,11 +1,7 @@
-﻿using SecureSales.Application.DTOs;
-using SecureSales.Application.Interfaces;
+﻿using SecureSales.Application.Interfaces;
 using SecureSales.Domain;
 using SecureSales.Domain.Interfaces.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SecureSales.Application.Services
