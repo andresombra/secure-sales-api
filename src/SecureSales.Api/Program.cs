@@ -1,14 +1,12 @@
-using Azure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SecureSales.Application.Interfaces;
 using SecureSales.Application.Services;
 using SecureSales.Domain.Interfaces.Repositories;
 using SecureSales.Infrastructure.Data;
 using SecureSales.Infrastructure.Repositories;
-using System;
+using SecureSales.Infrastructure.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -18,36 +16,31 @@ builder.Services.AddControllers();
 //  options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
 //    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
 
-//var connectionString = builder.Configuration["ConnectionStrings:Default"];
-// Nome do Key Vault
-var keyVaultName = builder.Configuration["KeyVaultName"];
-
-if (!string.IsNullOrEmpty(keyVaultName))
-{
-    var kvUri = new Uri($"https://{keyVaultName}.vault.azure.net/");
-
-    builder.Configuration.AddAzureKeyVault(
-        kvUri,
-        new DefaultAzureCredential()
-    );
-}
-
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(
-        keyVaultName,
-        ServerVersion.AutoDetect(keyVaultName)
-    ));
-
-
 // DI
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddSingleton<ISecretProvider, KeyVaultSecretProvider>();
+builder.Services.AddScoped<IConnectionStringFactory, ConnectionStringFactory>();
+
+builder.Services.AddDbContext<AppDbContext>((serviceProvider, options) =>
+{
+    var factory = serviceProvider.GetRequiredService<IConnectionStringFactory>();
+    var connectionString = factory.GetConnectionStringAsync().GetAwaiter().GetResult();
+
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
+
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//    options.UseMySql(
+//        connectionString,
+//        ServerVersion.AutoDetect(connectionString)
+//    ));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
 app.MapControllers();
 
 app.UseSwagger();
