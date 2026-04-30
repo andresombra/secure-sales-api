@@ -5,11 +5,13 @@
       "type": "apis.azure"
     },
     "secrets2": {
-      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('serviceConnectorResourceGroupName')]/providers/Microsoft.Web/sites/webapi-securesales/providers/Microsoft.ServiceLinker/linkers/CnxSecureSales_56BA3C28FE",
-      "secretStore": "AzureAppSettings",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.KeyVault/vaults/cofre-keyvault-cnstring",
-      "type": "secrets.keyVault",
+      "ignored": "true",
+      "type": "secrets",
       "connectionId": "CnxSecureSales"
+    },
+    "secrets1": {
+      "ignored": "true",
+      "type": "secrets.keyVault"
     }
   }
 }
