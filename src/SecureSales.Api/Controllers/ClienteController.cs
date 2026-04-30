@@ -23,12 +23,6 @@ namespace SecureSales.Api.Controllers
             return Ok(clientes);
         }
 
-        [HttpGet("Listar")]
-        public async Task<IActionResult> Listar()
-        {
-            return Ok("Listar ok");
-        }
-
         [HttpPost]
         public async Task<IActionResult> Post(ClienteDto dto)
         {
