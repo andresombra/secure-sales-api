@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SecureSales.Domain;
+using SecureSales.Domain.Entities;
 
 namespace SecureSales.Infrastructure.Data
 {

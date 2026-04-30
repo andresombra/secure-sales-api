@@ -1,3 +1,5 @@
+using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -5,6 +7,7 @@ using SecureSales.Application.Interfaces;
 using SecureSales.Application.Services;
 using SecureSales.Domain.Interfaces.Repositories;
 using SecureSales.Infrastructure.Data;
+using SecureSales.Infrastructure.Mappings;
 using SecureSales.Infrastructure.Repositories;
 using SecureSales.Infrastructure.Security;
 
@@ -25,6 +28,8 @@ builder.Services.AddControllers();
 // DI
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddMapster();
+
 builder.Services.AddSingleton<ISecretProvider, KeyVaultSecretProvider>();
 builder.Services.AddScoped<IConnectionStringFactory, ConnectionStringFactory>();
 

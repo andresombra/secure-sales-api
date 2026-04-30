@@ -9,5 +9,10 @@ namespace SecureSales.Application.DTOs
     public class ClienteDto
     {
         public string Nome { get; set; }
+        public string? Email { get; set; }
+        public string? Telefone { get; set; }
+        public string? Celular { get; set; }
+        public string? Observacao { get; set; }
+        public bool StAtivo { get; set; }
     }
 }

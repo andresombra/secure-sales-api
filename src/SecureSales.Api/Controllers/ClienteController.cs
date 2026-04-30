@@ -26,7 +26,7 @@ namespace SecureSales.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(ClienteDto dto)
         {
-            return Ok(new { Id = 2026 });
+            return Ok(await _service.Incluir(dto));
         }
     }
 }
