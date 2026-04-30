@@ -1,4 +1,4 @@
-﻿using SecureSales.Domain;
+﻿using SecureSales.Application.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,6 +6,7 @@ namespace SecureSales.Application.Interfaces
 {
     public interface IClienteService
     {
-        Task<IEnumerable<Cliente>> Listar();
+        Task<IEnumerable<ClienteDto>> Listar();
+        Task<ClienteDto> Incluir(ClienteDto clienteDto);
     }
 }
