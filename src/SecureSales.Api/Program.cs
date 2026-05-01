@@ -13,6 +13,7 @@ using SecureSales.Infrastructure.Data;
 using SecureSales.Infrastructure.Repositories;
 using SecureSales.Infrastructure.Security;
 using System;
+using System.Threading.Tasks;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -63,13 +64,46 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.Authority = $"https://login.microsoftonline.com/{builder.Configuration["KeyVault:TenantId"]}/v2.0";
-        options.Audience = builder.Configuration["KeyVault:CientIdDaAPI"]; // Application ID do regapp-webapi-securesales
+        var tenantId = builder.Configuration["KeyVault:TenantId"];
+        var apiClientId = builder.Configuration["KeyVault:CientIdDaAPI"];
+
+        options.Authority = $"https://login.microsoftonline.com/{tenantId}/v2.0";
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
-            ValidateLifetime = true
+            ValidateLifetime = true,
+            ValidAudiences = new[]
+            {
+                apiClientId,
+                $"api://{apiClientId}"
+            },
+            ValidIssuers = new[]
+            {
+                $"https://sts.windows.net/{tenantId}/",
+                $"https://login.microsoftonline.com/{tenantId}/v2.0"
+            }
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                Console.WriteLine($"[JWT] AuthenticationFailed: {context.Exception.Message}");
+                return Task.CompletedTask;
+            },
+            OnTokenValidated = context =>
+            {
+                var iss = context.Principal?.FindFirst("iss")?.Value;
+                var aud = context.Principal?.FindFirst("aud")?.Value;
+                Console.WriteLine($"[JWT] TokenValidated - iss: {iss}, aud: {aud}");
+                return Task.CompletedTask;
+            },
+            OnChallenge = context =>
+            {
+                Console.WriteLine($"[JWT] Challenge - error: {context.Error}, desc: {context.ErrorDescription}");
+                return Task.CompletedTask;
+            }
         };
     });
 
