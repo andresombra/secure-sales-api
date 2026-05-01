@@ -21,5 +21,9 @@ namespace SecureSales.Infrastructure.Data
             var chaveName = _configuration["KeyVault:ChaveName"];
             return await _secretProvider.GetSecretAsync(chaveName);
         }
+
+        public async Task<string> GetTenantIdAsync() => _configuration["KeyVault:TenantId"];
+        public async Task<string> GetClientIdDaApiAsync() => _configuration["KeyVault:CientIdDaAPI"];
+
     }
 }
