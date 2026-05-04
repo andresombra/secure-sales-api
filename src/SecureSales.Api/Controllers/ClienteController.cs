@@ -30,5 +30,11 @@ namespace SecureSales.Api.Controllers
         {
             return Ok(await _service.Incluir(dto));
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Put(ClienteDto dto)
+        {
+            return Ok(await _service.(dto));
+        }
     }
 }

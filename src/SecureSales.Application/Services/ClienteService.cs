@@ -33,5 +33,12 @@ namespace SecureSales.Application.Services
             var clienteIncluido = await _clienteRepository.IncluirAsync(cliente);
             return _mapper.Map<ClienteDto>(clienteIncluido);
         }
+
+        public async Task<ClienteDto> Editar(ClienteDto clienteDto)
+        {
+            var cliente = _mapper.Map<Cliente>(clienteDto);
+            var clienteEditado = await _clienteRepository.EditarAsync(cliente);
+            return _mapper.Map<ClienteDto>(clienteEditado);
+        }
     }
 }

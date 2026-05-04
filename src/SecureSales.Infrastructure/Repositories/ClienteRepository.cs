@@ -30,5 +30,12 @@ namespace SecureSales.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return cliente;
         }
+
+        public async Task<Cliente> EditarAsync(Cliente cliente)
+        {
+            _context.Update(cliente);
+            await _context.SaveChangesAsync();
+            return cliente;
+        }
     }
 }

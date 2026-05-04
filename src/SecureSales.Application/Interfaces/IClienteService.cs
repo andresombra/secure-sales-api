@@ -8,5 +8,6 @@ namespace SecureSales.Application.Interfaces
     {
         Task<IEnumerable<ClienteDto>> Listar();
         Task<ClienteDto> Incluir(ClienteDto clienteDto);
+        Task<ClienteDto> Editar(ClienteDto clienteDto);
     }
 }
