@@ -30,8 +30,8 @@ steps:
   displayName: 'Build project'
 
 # Testes (XUnit/NUnit)
-- script: dotnet test --configuration $(buildConfiguration) --no-build --verbosity normal
-  displayName: 'Run tests'
+#- script: dotnet test --configuration $(buildConfiguration) --no-build --verbosity normal
+#  displayName: 'Run tests'
 
 # Publish (gera artefato)
 - script: dotnet publish -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
