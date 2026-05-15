@@ -34,7 +34,7 @@ namespace SecureSales.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> Put(ClienteDto dto)
         {
-            return Ok(await _service.(dto));
+            return Ok(await _service.Editar(dto));
         }
     }
 }
